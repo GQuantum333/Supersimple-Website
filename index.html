@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numerology Specialist</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Numerology Specialist</h1>
+    <form id="numerologyForm">
+      <label for="dob">Enter your Date of Birth</label>
+      <input type="date" id="dob" required />
+      <button type="submit">Get Reading</button>
+    </form>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    function calculateNumerology(date) {
+      if (!date) return "Please enter a valid date.";
+
+      let digits = date.replaceAll("-", "").split("").map(Number);
+      let total = digits.reduce((a, b) => a + b, 0);
+
+      while (total > 9) {
+        total = total
+          .toString()
+          .split("")
+          .map(Number)
+          .reduce((a, b) => a + b, 0);
+      }
+
+      const meanings = {
+        1: "Independent, strong-willed, and a leader by nature.",
+        2: "Peaceful, diplomatic, and values relationships.",
+        3: "Creative, joyful, and full of self-expression.",
+        4: "Practical, disciplined, and hardworking.",
+        5: "Adventurous, curious, and freedom-loving.",
+        6: "Caring, nurturing, and family-oriented.",
+        7: "Spiritual, wise, and analytical.",
+        8: "Ambitious, powerful, and success-driven.",
+        9: "Compassionate, humanitarian, and selfless.",
+      };
+
+      return `Your numerology number is ${total}. ${meanings[total]}`;
+    }
+
+    document.getElementById("numerologyForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const dob = document.getElementById("dob").value;
+      const reading = calculateNumerology(dob);
+      document.getElementById("result").innerText = reading;
+    });
+  </script>
+</body>
+</html>
